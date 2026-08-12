@@ -140,6 +140,15 @@ jobs:
             // index-validate.yml that have `<<: *report_to_github` and a
             // `$MODE == "run" || $MODE == "fuzz"` rule (or `"fuzz"` alone
             // for fuzz-only jobs).
+            //
+            // Only pre-post names that are stable. The fuzz stage is a
+            // parallel:matrix over run_fuzz.py's variants, so its jobs are
+            // `gitlab/fuzz-default`, `gitlab/fuzz-check-determinism` and so
+            // on -- enumerating them here would pin the variant table in a
+            // third place and leave a permanently-pending row behind the
+            // day one gets renamed. Those rows appear on their own as each
+            // variant finishes; `gitlab/fuzz-comment` stays pending for the
+            // whole run and is the "fuzz is still going" indicator.
             const mode = process.env.MODE;
             const sha = process.env.SHA;
             const pipelineUrl = process.env.PIPELINE_URL;
@@ -147,7 +156,7 @@ jobs:
               'diff', 'check', 'verify-index', 'verify-apworlds',
               'apdiff', 'comment-diff', 'unit-tests', 'network-audit',
             ];
-            const fuzzOnly = mode === 'fuzz' ? ['fuzz'] : [];
+            const fuzzOnly = mode === 'fuzz' ? ['fuzz-comment'] : [];
             const contexts = [...base, ...fuzzOnly].map(c => `gitlab/${c}`);
 
             for (const ctx of contexts) {
