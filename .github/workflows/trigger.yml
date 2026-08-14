@@ -193,9 +193,14 @@ jobs:
             const mode = process.env.MODE;
             const sha = process.env.SHA;
             const pipelineUrl = process.env.PIPELINE_URL;
+            // verify-index-main reports on main's own lockfile health and
+            // ignores the PR entirely; verify-index reports only what the PR
+            // changed. Two rows so pre-existing drift never reads as the
+            // contributor's fault.
             const base = [
-              'diff', 'check', 'verify-index', 'verify-apworlds',
-              'apdiff', 'comment-diff', 'unit-tests', 'network-audit',
+              'diff', 'check', 'verify-index-main', 'verify-index',
+              'verify-apworlds', 'apdiff', 'comment-diff', 'unit-tests',
+              'network-audit',
             ];
             const fuzzOnly = mode === 'fuzz' ? ['fuzz-comment'] : [];
             const contexts = [...base, ...fuzzOnly].map(c => `gitlab/${c}`);
