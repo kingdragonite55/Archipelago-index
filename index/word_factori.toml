@@ -1,0 +1,10 @@
+name = "Word Factori"
+home = "https://github.com/Akamarus/word-factori-archipelago"
+default_url = "https://github.com/Akamarus/word-factori-archipelago/releases/download/v{{version}}/word_factori.apworld"
+
+[versions]
+"1.7.0" = {}
+
+# Match the published APWorld's maximum_ap_version.
+[releases]
+"1.7.0" = { max_ap_version = "0.6.8" }
