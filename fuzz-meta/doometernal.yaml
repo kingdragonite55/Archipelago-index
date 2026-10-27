@@ -1,0 +1,18 @@
+DOOM Eternal:
+  triggers:
+    - option_category: DOOM Eternal
+      option_name: goal
+      option_result: acquire_the_unmaykr
+      options:
+        DOOM Eternal:
+          include_slayer_gates: 'true'
+          mission_pool:
+            base: 1
+            full_saga: 1
+            custom: 1
+    - option_category: DOOM Eternal
+      option_name: mission_pool
+      option_result: custom
+      options:
+        DOOM Eternal:
+          +custom_missions: ['Hell on Earth', 'Exultia', 'Cultist Base']
